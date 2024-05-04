@@ -3,7 +3,7 @@
 // @description    Amplifies any youtube video with loudness lower than 0dB
 // @include        https://www.youtube.com/*
 // @icon           https://www.youtube.com/favicon.ico
-// @version        1.0.0
+// @version        1.1.0
 // @grant          none
 // @run-at         document-end
 // ==/UserScript==
@@ -29,10 +29,22 @@ function createButton()
     buttonInsideInsertedElement.onclick = main
 }
 
+var currentlyOn = false;
 
 function main() {
-    document.querySelector('video').playbackRate = 0.95904095904;
-    document.querySelector('video').preservesPitch = false;
+    if (currentlyOn == false){
+        document.querySelector('video').playbackRate = 0.95904095904;
+        document.querySelector('video').preservesPitch = false;
+        currentlyOn = true;
+        return
+    }
+
+    if (currentlyOn == true){
+        document.querySelector('video').playbackRate = 1;
+        document.querySelector('video').preservesPitch = true;
+        currentlyOn = false;
+        return
+    }
 }
 
 function runCreateButton() {
