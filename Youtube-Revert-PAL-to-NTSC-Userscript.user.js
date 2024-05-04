@@ -3,7 +3,7 @@
 // @description    Amplifies any youtube video with loudness lower than 0dB
 // @include        https://www.youtube.com/*
 // @icon           https://www.youtube.com/favicon.ico
-// @version        1.1.0
+// @version        1.1.1
 // @grant          none
 // @run-at         document-end
 // ==/UserScript==
@@ -47,6 +47,10 @@ function main() {
     }
 }
 
+function resetCurrentlyOn() {
+    currentlyOn = false;
+}
+
 function runCreateButton() {
     try {
         createButton()
@@ -59,3 +63,10 @@ function runCreateButton() {
 
 // Run the createButton function when the page loads
 window.addEventListener('load', runCreateButton);
+
+window.addEventListener('popstate', resetCurrentlyOn);
+window.addEventListener("spfdone", resetCurrentlyOn); // old youtube design
+window.addEventListener("yt-navigate-start", resetCurrentlyOn); // new youtube design
+document.addEventListener("DOMContentLoaded", resetCurrentlyOn); // one-time early processing
+window.addEventListener("load", resetCurrentlyOn); // one-time late postprocessing
+
